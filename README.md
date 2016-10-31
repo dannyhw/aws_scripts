@@ -20,5 +20,6 @@ optional arguments:
   --script-location SCRIPT_LOCATION
                         File path of the script to execute
   --username USERNAME   Username for ssh
-  --run-as-sudo RUN_AS_SUDO Set true if you want to execute the script contents using sudo (root permissions)
+  --run-as-sudo         Use this flag if you want to execute the script
+                        contents using sudo (root permissions)
 ```
