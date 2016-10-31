@@ -3,7 +3,9 @@ Just some scripts I use for various different things.
 
 #For remotely executing bash on elb attached instances: 
 
-Make sure you have authentication setup with rsa keys and your private key is is_rsa in ~/.ssh. Also aws cli should be configured correctly (authenication/ec2 iam role already setup) and default region set. Potentially further arguments can be added to this script to be more flexible (this is a to do).
+Make sure you have authentication setup with rsa keys and your private key is is_rsa in ~/.ssh. Also aws cli should be configured correctly (authenication/ec2 iam role already setup) and default region set. Potentially further arguments can be added to this script to be more flexible (this is a to do). Abou using sudo flag, this is dangerous be careful. Also using sudo non interactively likely depends on sudo not prompting you for a password, need to test this.
+
+NOTE: BE CAREFUL ABOUT RUNNING THIS, SCRIPTS ARE RUN AS ROOT. 
 
 ```
 usage: execute_remote_on_lb.py --load-balancer <elb name> --script <filepath>
@@ -18,4 +20,5 @@ optional arguments:
   --script-location SCRIPT_LOCATION
                         File path of the script to execute
   --username USERNAME   Username for ssh
-  ```
+  --run-as-sudo RUN_AS_SUDO Set true if you want to execute the script contents using sudo (root permissions)
+```
