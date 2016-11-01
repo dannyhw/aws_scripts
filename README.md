@@ -23,3 +23,6 @@ optional arguments:
   --run-as-sudo         Use this flag if you want to execute the script
                         contents using sudo (root permissions)
 ```
+
+# ALB helper
+This is used to get information on albs and the related target groups. I wrote this since the alb api methods don't directly allow you to access attached instances like the ELB did. This way I can get the attached instances (targets) and re-use the methods. I wrote it to allow you to load all the info once or just get it each time.
