@@ -1,7 +1,7 @@
 # aws_scripts
 Just some scripts I use for various different things.
 
-#For remotely executing bash on elb attached instances: 
+## For remotely executing bash on elb attached instances: 
 
 Make sure you have authentication setup with rsa keys and your private key is is_rsa in ~/.ssh. Also aws cli should be configured correctly (authenication/ec2 iam role already setup) and default region set. Potentially further arguments can be added to this script to be more flexible (this is a to do). 
 
@@ -24,5 +24,5 @@ optional arguments:
                         contents using sudo (root permissions)
 ```
 
-# alb_helper.py
+## alb_helper.py
 This is a python module which contains the class ALBHelper used to get information on albs and the related target groups. I wrote this since the alb api methods don't directly allow you to access attached instances like the ELB did. This way I can get the attached instances (targets) and re-use the methods. I wrote it to allow you to load all the info once or just get it each time. This was my first attempt at a python class so I learnt some good stuff but it probably needs alot of work.
