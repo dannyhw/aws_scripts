@@ -25,4 +25,4 @@ optional arguments:
 ```
 
 ## alb_helper.py
-This is a python module which contains the class ALBHelper used to get information on albs and the related target groups. I wrote this since the alb api methods don't directly allow you to access attached instances like the ELB did. This way I can get the attached instances (targets) and re-use the methods. I wrote it to allow you to load all the info once or just get it each time. This was my first attempt at a python class so I learnt some good stuff but it probably needs alot of work.
+This is a python module which contains the class ALBHelper used to get information on albs and the related target groups. I wrote this since the alb api methods don't directly allow you to access attached instances like the ELB did. This way I can get the attached instances (targets) and re-use the methods. I wrote it to allow you to load all the info once with the option to reload it. This was my first attempt at a python class so I learnt some good stuff but it probably needs alot of work. Also the ec2 related stuff should probably be separated into another class.
