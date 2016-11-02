@@ -9,7 +9,7 @@ class ALBHelper(object):
 
     """
     Class ALBHelper contains an extended version of the alb description from
-    boto3's describe load balancer. 
+    boto3's describe load balancer.
     """
 
     def __init__(self, alb_name):
@@ -51,6 +51,9 @@ class ALBHelper(object):
         target_group_descriptions_extended = self.get_target_group_descriptions_extended(target_group_descriptions)
         alb_description["TargetGroups"] = target_group_descriptions_extended
         return alb_description
+
+    def update_alb_description_extended(self):
+        self.alb_description_extended = self.get_alb_description_extended()
 
     def get_target_group_descriptions(self, alb_arn):
         """
