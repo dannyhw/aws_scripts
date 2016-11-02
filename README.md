@@ -31,7 +31,8 @@ example usage:
 ```
 from alb_helper import ALBHelper
 alb = ALBHelper("MY-LOAD-BALANCER")
-print alb.alb_description_extended
+alb_description = alb.alb_description_extended
+print alb_description["TargetGroups"][0]["Targets"]
 ```
 
 
