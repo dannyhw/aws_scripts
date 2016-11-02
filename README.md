@@ -25,7 +25,7 @@ optional arguments:
 ```
 
 ## alb_helper.py
-This is a python module which contains the class ALBHelper used to get the alb description from boto3 but also add to it the related target group information and targets attached to those target groups. This can be used to make the connection between ALB's and the targets attached to those ALB's. The class variable alb_description_extended is the main one here however it may also be useful to use get_alb_description_extended() if changes have been made or use update_alb_description_extended() before accessing the extended description.
+This is a python module which contains the class ALBHelper used to get the alb description from boto3 but also add to it the related target group information and targets attached to those target groups. The class variable alb_description_extended is the main one here however it may also be useful to use get_alb_description_extended() if changes have been made or use update_alb_description_extended() before accessing the extended description.
 
 example usage:
 ```
