@@ -25,4 +25,6 @@ optional arguments:
 ```
 
 ## alb_helper.py
-This is a python module which contains the class ALBHelper used to get information on albs and the related target groups. I wrote this since the alb api methods don't directly allow you to access attached instances like the ELB did. This way I can get the attached instances (targets) and re-use the methods. I wrote it to allow you to load all the info once with the option to reload it. This was my first attempt at a python class so I learnt some good stuff but it probably needs alot of work. Also the ec2 related stuff should probably be separated into another class.
+This is a python module which contains the class ALBHelper used to get the alb description from boto3 but also add to it the related target group information and targets attached to those target groups. This can be used to make the connection between ALB's and the targets attached to those ALB's. The class variable alb_description_extended is the main one here however it may also be useful to use get_alb_description_extended() if changes have been made or use update_alb_description_extended() before accessing the extended description.
+
+
