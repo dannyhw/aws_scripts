@@ -34,20 +34,29 @@ def expand_volume_from_snapshot(snap_id, size):
             }
         ]
     )
-
+    volume_available_waiter = client.get_waiter('volume_available')
+    print("wait for volume to be available")
+    volume_available_waiter.wait(VolumeIds=[new_volume.id])
+    input("Press Enter to attach...")
     instance = ec2.Instance(attached_instance)
     print("stopping instance %s" % instance.id)
     instance.stop()
     print("waiting till stopped")
     instance.wait_until_stopped()
     print("detaching volume %s " % old_volume.id)
-    instance.detach_volume(old_volume.id)
+    instance.detach_volume(VolumeId=old_volume.id)
+    print("wait for volume to be detached")
+    volume_available_waiter.wait(VolumeIds=[old_volume.id])
     print("attaching new volume %s" % new_volume_id)
     instance.attach_volume(VolumeId=new_volume_id, Device=device_name)
+    volume_in_use_waiter = client.get_waiter('volume_in_use')
+    print("wait for volume to be attached")
+    volume_in_use_waiter.wait(VolumeIds=[new_volume.id])
     print("starting instance")
     instance.start()
     instance.wait_until_running()
-    print("instance running, check new volume is working")
+    print("instance running, go ahead and expand the partition")
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -67,4 +76,3 @@ if __name__ == '__main__':
     size = args.new_size
     snap_id = args.snapshot_id
     expand_volume_from_snapshot(snap_id, size)
-    
