@@ -3,26 +3,7 @@ import boto3
 from datetime import date
 import argparse
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='replace a volume with a larger one, requires that a\
-         snapshot has been created prior to this',
-        usage='%(prog)s --snapshot-id <id> --new-size <number_GBS>')
-    parser.add_argument(
-        "--snapshot-id", help="Id of the snapshot of the volume to expand", required=True)
-    parser.add_argument("--new-size",
-                        help="The new size of the volume", type=int, required=True)
-
-    if len(sys.argv[1:]) < 2:
-        parser.print_help()
-        parser.exit()
-    args = parser.parse_args()
-
-    size = args.new_size
-    snap_id = args.snapshot_id
-    extend_volume_from_snapshot(snap_id, size)
-
-def extend_volume_from_snapshot(snap_id, size):
+def expand_volume_from_snapshot(snap_id, size):
     ec2 = boto3.resource('ec2')
     client = boto3.client('ec2')
     snapshot = ec2.Snapshot(snap_id)
@@ -67,3 +48,23 @@ def extend_volume_from_snapshot(snap_id, size):
     instance.start()
     instance.wait_until_running()
     print("instance running, check new volume is working")
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='replace a volume with a larger one, requires that a\
+         snapshot has been created prior to this',
+        usage='%(prog)s --snapshot-id <id> --new-size <number_GBS>')
+    parser.add_argument(
+        "--snapshot-id", help="Id of the snapshot of the volume to expand", required=True)
+    parser.add_argument("--new-size",
+                        help="The new size of the volume", type=int, required=True)
+
+    if len(sys.argv[1:]) < 2:
+        parser.print_help()
+        parser.exit()
+    args = parser.parse_args()
+
+    size = args.new_size
+    snap_id = args.snapshot_id
+    expand_volume_from_snapshot(snap_id, size)
+    
