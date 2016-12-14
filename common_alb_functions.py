@@ -75,7 +75,7 @@ def deregister_instance(target_group_arn, instance_id):
     )
 
 
-def register_instance(alb_name, instance_id):
+def register_instance(target_group_arn, instance_id):
     """
     Register an instance to a specific target group
     args:
@@ -141,3 +141,55 @@ def get_arns_for_target_groups_containing_target(target_id):
     """
     target_groups = get_all_target_groups()
     return [target_group for target_group in target_groups if target_id in get_targets_for_target_group(target_group)]
+
+def get_alb_arn_from_name(alb_name):
+    """
+    Returns the amazon resource name of a loadbalancer when given the name.
+    args:
+        alb_name - the application load balancer name
+    """
+    return ALB_CLIENT.describe_load_balancers(Names=[alb_name])['LoadBalancers'][0]['LoadBalancerArn']
+
+def get_alb_target_groups(alb_arn):
+    """
+    Takes an application load balancer amazon resource name and returns a list
+    of target group amazon resource names.
+    args:
+        alb_arn - the amazon resource name of an ALB
+    """
+    target_group_descriptions = ALB_CLIENT.describe_target_groups(LoadBalancerArn=alb_arn)['TargetGroups']
+    return [tg_desc['TargetGroupArn'] for tg_desc in target_group_descriptions]
+
+def get_unique_targets_from_target_groups(target_group_list):
+    """
+    Takes a list of target group amazon resource names and returns a list of
+    unique targets accross the target groups.
+    args:
+        target_group_list - a list of target group arns.
+    """
+    targets = []
+    for target_group in target_group_list:
+        targets.extend(get_targets_for_target_group(target_group))
+    return list(set(targets))
+
+def get_all_unique_targets_for_alb_by_name(alb_name):
+    """
+    Takes a load balancer name and returns a set of unique targets accross all
+    of it's target groups.
+    args:
+        alb_name - name of an application load balancer
+    """
+    alb_arn = get_alb_arn_from_name(alb_name)
+    alb_target_groups = get_alb_target_groups(alb_arn)
+    return get_unique_targets_from_target_groups(alb_target_groups)
+
+def print_all_unique_targets_for_alb_by_name(alb_name):
+    """
+    Prints a space separated list of the unique targets attached to an
+    application loadbalancer.
+    args:
+        alb_name - the name of an application load balancer
+    """
+    targets = get_all_unique_targets_for_alb_by_name(alb_name)
+    targets_space_seperated = ' '.join(map(str,targets))
+    print(targets_space_seperated)
