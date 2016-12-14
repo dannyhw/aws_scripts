@@ -41,6 +41,7 @@ print alb_description["TargetGroups"][0]["Targets"]
 A module with various functions which I use to help do automated deployments accross ALB's. Still in progress.
 
 ## expand_ec2_volume
+```
 usage: expand_ec2_volume.py --snapshot-id <id> --new-size <number_GBS>
 
 replace a volume with a larger one, requires that a snapshot has been created
@@ -51,3 +52,4 @@ optional arguments:
   --snapshot-id SNAPSHOT_ID
                         Id of the snapshot of the volume to expand
   --new-size NEW_SIZE   The new size of the volume
+  ```
