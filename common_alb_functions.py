@@ -1,15 +1,14 @@
 import boto3
 import time
 
-EC2_RESOURCE = boto3.resource('ec2')
-EC2_CLIENT = boto3.client('ec2')
+""" Used to interact with aws application load balancers """
 ALB_CLIENT = boto3.client('elbv2')
 
 """ Number of times to check for a resouce to be in the desired state. """
 WAITER_ATTEMPTS = 60
 
 """ Number of seconds to wait between attempts for resource to be in a state for ALB registration/deregistration. """
-WAITER_INTERVAL = 10
+WAITER_INTERVAL = 1
 
 
 def wait_for_state(target_group_arn, instance_id, state_name):
@@ -88,29 +87,6 @@ def register_instance(target_group_arn, instance_id):
             }
         ]
     )
-
-
-def get_instance_id_from_ip(instance_ip):
-    """
-    Get the id of an ec2 instance bases on its private ip address
-    args:
-        instance_ip - private ip address of instance
-    """
-    instance_description = EC2_CLIENT.describe_instances(
-        Filters=[
-            {
-                'Name': 'private-ip-address',
-                'Values': [
-                    instance_ip
-                ]
-            },
-        ]
-    )
-    if instance_description['Reservations']:
-        return instance_description['Reservations'][0]['Instances'][0]['InstanceId']
-    else:
-        raise ValueError("No instances found with this ip address, probably an invalid ip")
-
 
 def get_all_target_groups():
     """
