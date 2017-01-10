@@ -41,13 +41,14 @@ def print_ec2_info():
 
 def save_ec2_info_as_csv(filename):
     import csv
-    myfile = open(filename, 'wb')
-    wr = csv.writer(myfile)
-    wr.writerow(HEADERS)
-    instance_reservations = ec2.describe_instances()['Reservations']
-    for reservation in instance_reservations:
-        for instance in reservation['Instances']:
-            wr.writerow(get_instance_info_list(instance))
+    with open(filename, 'wb') as my_file:
+        wr = csv.writer(my_file)
+        wr.writerow(HEADERS)
+        instance_reservations = ec2.describe_instances()['Reservations']
+        for reservation in instance_reservations:
+            for instance in reservation['Instances']:
+                wr.writerow(get_instance_info_list(instance))
+
 
 
 if __name__ == '__main__':
