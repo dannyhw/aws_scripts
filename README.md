@@ -58,4 +58,4 @@ optional arguments:
 I made this to create a csv file with information on current EC2 instances.
 Has two uses:
 - Print a comma separated table which can be used to generate a csv file `python instances_info.py > file.csv`  or just for reading in the terminal `python instances_info.py`
-- Directly save to csv `python instances_info.py`
+- Directly save to csv `python instances_info.py` (currently you'll have to un-comment the line in the module) TODO: add sys args
