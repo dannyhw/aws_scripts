@@ -1,19 +1,21 @@
 #!/usr/bin/env ruby
 require 'set'
-users = []
 user_key_pairs = {}
-File.open(ENV['HOME'] + "/.ssh/authorized_keys").each do |l|
-  file_name = l.split(" ")[2]
-  key_file = File.new("#{file_name}.pub_key", "w")
-  key_file.puts l
+
+File.open(ENV['HOME'] + '/.ssh/authorized_keys').each do |public_key|
+  file_name = public_key.split(' ')[2] + '.pub_key'
+  key_file = File.new(file_name, 'w')
+  key_file.puts public_key
   key_file.close
-  key_sig_user = %x{ssh-keygen -l -f #{file_name}.pub_key}
-  user_key_pairs[key_sig_user.split(" ")[1]] =  key_sig_user.split(" ")[2]
+  key_sig_user = `ssh-keygen -l -f #{file_name}`
+  rsa_signature = key_sig_user.split(' ')[1]
+  rsa_public_comment = key_sig_user.split(' ')[2]
+  user_key_pairs[rsa_signature] = rsa_public_comment
+  system("rm #{file_name}")
 end
-recent_logins = %x{sudo tail /var/log/auth.log -n 200 | grep RSA | awk '\{print $16\}'}
+
+recent_logins = `sudo tail /var/log/auth.log -n 200 | grep RSA |
+                 awk '\{print $16\}'`
 signatures = recent_logins.split("\n")
-curr_users = Set.new
-for signature in signatures
-    curr_users.add(user_key_pairs[signature])
-end
-puts curr_users.to_a.join(', ')
+
+puts signatures.uniq.map{|signature| user_key_pairs[signature]}.join(', ')
