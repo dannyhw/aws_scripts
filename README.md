@@ -59,3 +59,7 @@ I made this to create a csv file with information on current EC2 instances.
 Has two uses:
 - Print a comma separated table which can be used to generate a csv file `python instances_info.py > file.csv`  or just for reading in the terminal `python instances_info.py`
 - Directly save to csv `python instances_info.py` (currently you'll have to un-comment the line in the module) TODO: add sys args
+
+## see_recent_users.rb
+
+I created this to try out a bit of ruby for scripting, it basically returns the recent users that have authenticated to the server by comparing the signature in /var/log/auth.log with the signatures which are generated when using the keys in .ssh/authorised keys. This requires that you have given each authorised key a useful comment since that's what gets printed out. 
