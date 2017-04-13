@@ -66,7 +66,7 @@ I created this to try out a bit of ruby for scripting, it basically returns the 
 
 ## change_instance_type.py
 This is for changing a running instance instance type. There is no specific checks here yet so be careful using this to use the correct instance type names.
-
+```
 usage: change_instance_type.py --instance-id <id> --target-instance-type <instance-type>
 
 Change the instance type by instance id
@@ -77,4 +77,4 @@ optional arguments:
                         Id of the snapshot of the volume to expand
   --target-instance-type TARGET_INSTANCE_TYPE
                         The new type of the instance
-
+```
