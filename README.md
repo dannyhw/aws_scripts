@@ -63,3 +63,18 @@ Has two uses:
 ## see_recent_users.rb
 
 I created this to try out a bit of ruby for scripting, it basically returns the recent users that have authenticated to the server by comparing the signature in /var/log/auth.log with the signatures which are generated when using the keys in .ssh/authorised keys. This requires that you have given each authorised key a useful comment since that's what gets printed out. 
+
+## change_instance_type.py
+This is for changing a running instance instance type. There is no specific checks here yet so be careful using this to use the correct instance type names.
+
+usage: change_instance_type.py --instance-id <id> --target-instance-type <instance-type>
+
+Change the instance type by instance id
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --instance-id INSTANCE_ID
+                        Id of the snapshot of the volume to expand
+  --target-instance-type TARGET_INSTANCE_TYPE
+                        The new type of the instance
+
