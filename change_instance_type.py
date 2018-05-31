@@ -22,7 +22,7 @@ if __name__ == '__main__':
         usage=('%(prog)s --instance-id <id> ' +
                '--target-instance-type <instance-type>'))
     parser.add_argument("--instance-id",
-                        help="Id of the snapshot of the volume to expand",
+                        help="Id of the instance",
                         required=True)
     parser.add_argument("--target-instance-type",
                         help="The new type of the instance",
